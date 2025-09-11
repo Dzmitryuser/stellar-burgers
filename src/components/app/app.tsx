@@ -1,3 +1,4 @@
+//src/components/app/app.tsx
 import { ConstructorPage } from '@pages';
 import '../../index.css';
 import styles from './app.module.css';
