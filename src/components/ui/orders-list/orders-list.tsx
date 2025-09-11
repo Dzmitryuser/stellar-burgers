@@ -1,3 +1,4 @@
+//src/components/ui/orders-list/orders-list.tsx
 import { FC } from 'react';
 
 import styles from './orders-list.module.css';

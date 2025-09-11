@@ -1,3 +1,4 @@
+//src/components/ui/pages/profile-orders/profile-orders.tsx
 import { FC } from 'react';
 
 import styles from './profile-orders.module.css';

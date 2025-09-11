@@ -1,3 +1,4 @@
+//src/components/ui/order-details/order-details.tsx
 import React from 'react';
 import styles from './order-details.module.css';
 import doneImg from '../../../images/done.svg';

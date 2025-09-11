@@ -1,3 +1,4 @@
+//src/components/ui/app-header/app-header.tsx
 import React, { FC } from 'react';
 import styles from './app-header.module.css';
 import { TAppHeaderUIProps } from './type';

@@ -1,3 +1,4 @@
+//src/components/ingredients-category/ingredients-category.tsx
 import { forwardRef, useMemo } from 'react';
 import { TIngredientsCategoryProps } from './type';
 import { TIngredient } from '@utils-types';

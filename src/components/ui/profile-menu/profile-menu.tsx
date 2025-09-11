@@ -1,3 +1,4 @@
+//src/components/ui/profile-menu/profile-menu.tsx
 import React, { FC } from 'react';
 import styles from './profile-menu.module.css';
 import { NavLink } from 'react-router-dom';

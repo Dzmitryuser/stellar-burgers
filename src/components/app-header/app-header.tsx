@@ -1,3 +1,4 @@
+//src/components/app-header/app-header.tsx
 import { FC } from 'react';
 import { AppHeaderUI } from '@ui';
 

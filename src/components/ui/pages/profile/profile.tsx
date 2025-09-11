@@ -1,3 +1,4 @@
+//src/components/ui/pages/profile/profile.tsx
 import { FC } from 'react';
 
 import { Button, Input } from '@zlden/react-developer-burger-ui-components';

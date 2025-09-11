@@ -1,3 +1,4 @@
+//src/components/ui/preloader/preloader.tsx
 import React from 'react';
 import styles from './preloader.module.css';
 

@@ -1,3 +1,4 @@
+//src/components/ui/ingredient-details/ingredient-details.tsx
 import React, { FC, memo } from 'react';
 import styles from './ingredient-details.module.css';
 import { IngredientDetailsUIProps } from './type';

@@ -1,3 +1,4 @@
+//src/components/feed-info/feed-info.tsx
 import { FC } from 'react';
 
 import { TOrder } from '@utils-types';

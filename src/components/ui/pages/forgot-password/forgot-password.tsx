@@ -1,3 +1,4 @@
+//src/components/ui/pages/forgot-password/forgot-password.tsx
 import { FC } from 'react';
 
 import { Input, Button } from '@zlden/react-developer-burger-ui-components';

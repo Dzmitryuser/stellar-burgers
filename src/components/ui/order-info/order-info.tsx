@@ -1,3 +1,4 @@
+//src/components/ui/order-info/order-info.tsx
 import React, { FC, memo } from 'react';
 import {
   CurrencyIcon,

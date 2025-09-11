@@ -1,3 +1,4 @@
+//src/components/profile-menu/profile-menu.tsx
 import { FC } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ProfileMenuUI } from '@ui';

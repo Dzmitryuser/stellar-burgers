@@ -1,3 +1,4 @@
+//src/components/ui/pages/register/register.tsx
 import { FC, useState } from 'react';
 import {
   Input,
