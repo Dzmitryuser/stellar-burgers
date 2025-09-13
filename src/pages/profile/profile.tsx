@@ -1,3 +1,4 @@
+//src/components/pages/profile/profile.tsx
 import { ProfileUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
 

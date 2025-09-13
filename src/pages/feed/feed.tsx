@@ -1,3 +1,4 @@
+//src/components/pages/feed/feed.tsx
 import { Preloader } from '@ui';
 import { FeedUI } from '@ui-pages';
 import { TOrder } from '@utils-types';

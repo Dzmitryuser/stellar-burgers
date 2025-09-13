@@ -1,3 +1,4 @@
+//src/components/pages/profile-orders/profile-orders.tsx
 import { ProfileOrdersUI } from '@ui-pages';
 import { TOrder } from '@utils-types';
 import { FC } from 'react';
