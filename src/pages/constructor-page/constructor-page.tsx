@@ -1,4 +1,4 @@
-//src/components/pages/constructor-page/constructor-page.tsx
+//src/pages/constructor-page/constructor-page.tsx
 import { useSelector } from '../../services/store';
 
 import styles from './constructor-page.module.css';

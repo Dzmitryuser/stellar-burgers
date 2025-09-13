@@ -1,4 +1,4 @@
-//src/components/pages/register/register.tsx
+//src/pages/register/register.tsx
 import { FC, SyntheticEvent, useState } from 'react';
 import { RegisterUI } from '@ui-pages';
 

@@ -1,4 +1,4 @@
-//src/components/pages/forgot-password/forgot-password.tsx
+//src/pages/forgot-password/forgot-password.tsx
 import { FC, useState, SyntheticEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 

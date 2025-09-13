@@ -1673,19 +1673,594 @@ export const ProfileMenuUI: FC<ProfileMenuUIProps> = ({
 );
 //________________________________________
 
+//src/pages/constructor-page/constructor-page.tsx
+import { useSelector } from '../../services/store';
 
+import styles from './constructor-page.module.css';
+
+import { BurgerIngredients } from '../../components';
+import { BurgerConstructor } from '../../components';
+import { Preloader } from '../../components/ui';
+import { FC } from 'react';
+
+export const ConstructorPage: FC = () => {
+  /** TODO: взять переменную из стора */
+  const isIngredientsLoading = false;
+
+  return (
+    <>
+      {isIngredientsLoading ? (
+        <Preloader />
+      ) : (
+        <main className={styles.containerMain}>
+          <h1
+            className={`${styles.title} text text_type_main-large mt-10 mb-5 pl-5`}
+          >
+            Соберите бургер
+          </h1>
+          <div className={`${styles.main} pl-5 pr-5`}>
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </div>
+        </main>
+      )}
+    </>
+  );
+};
 //________________________________________
+
+//src/pages/feed/feed.tsx
+import { Preloader } from '@ui';
+import { FeedUI } from '@ui-pages';
+import { TOrder } from '@utils-types';
+import { FC } from 'react';
+
+export const Feed: FC = () => {
+  /** TODO: взять переменную из стора */
+  const orders: TOrder[] = [];
+
+  if (!orders.length) {
+    return <Preloader />;
+  }
+
+  <FeedUI orders={orders} handleGetFeeds={() => {}} />;
+};
 //________________________________________
+
+//src/pages/forgot-password/forgot-password.tsx
+import { FC, useState, SyntheticEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { forgotPasswordApi } from '@api';
+import { ForgotPasswordUI } from '@ui-pages';
+
+export const ForgotPassword: FC = () => {
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState<Error | null>(null);
+
+  const navigate = useNavigate();
+
+  const handleSubmit = (e: SyntheticEvent) => {
+    e.preventDefault();
+
+    setError(null);
+    forgotPasswordApi({ email })
+      .then(() => {
+        localStorage.setItem('resetPassword', 'true');
+        navigate('/reset-password', { replace: true });
+      })
+      .catch((err) => setError(err));
+  };
+
+  return (
+    <ForgotPasswordUI
+      errorText={error?.message}
+      email={email}
+      setEmail={setEmail}
+      handleSubmit={handleSubmit}
+    />
+  );
+};
 //________________________________________
+
+//src/pages/login/login.tsx
+import { FC, SyntheticEvent, useState } from 'react';
+import { LoginUI } from '@ui-pages';
+
+export const Login: FC = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = (e: SyntheticEvent) => {
+    e.preventDefault();
+  };
+
+  return (
+    <LoginUI
+      errorText=''
+      email={email}
+      setEmail={setEmail}
+      password={password}
+      setPassword={setPassword}
+      handleSubmit={handleSubmit}
+    />
+  );
+};
 //________________________________________
+
+//src/pages/not-fount-404/not-fount-404.tsx
+import { FC } from 'react';
+
+export const NotFound404: FC = () => (
+  <h3 className={`pb-6 text text_type_main-large`}>
+    Страница не найдена. Ошибка 404.
+  </h3>
+);
 //________________________________________
+
+//src/pages/profile/profile.tsx
+import { ProfileUI } from '@ui-pages';
+import { FC, SyntheticEvent, useEffect, useState } from 'react';
+
+export const Profile: FC = () => {
+  /** TODO: взять переменную из стора */
+  const user = {
+    name: '',
+    email: ''
+  };
+
+  const [formValue, setFormValue] = useState({
+    name: user.name,
+    email: user.email,
+    password: ''
+  });
+
+  useEffect(() => {
+    setFormValue((prevState) => ({
+      ...prevState,
+      name: user?.name || '',
+      email: user?.email || ''
+    }));
+  }, [user]);
+
+  const isFormChanged =
+    formValue.name !== user?.name ||
+    formValue.email !== user?.email ||
+    !!formValue.password;
+
+  const handleSubmit = (e: SyntheticEvent) => {
+    e.preventDefault();
+  };
+
+  const handleCancel = (e: SyntheticEvent) => {
+    e.preventDefault();
+    setFormValue({
+      name: user.name,
+      email: user.email,
+      password: ''
+    });
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormValue((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value
+    }));
+  };
+
+  return (
+    <ProfileUI
+      formValue={formValue}
+      isFormChanged={isFormChanged}
+      handleCancel={handleCancel}
+      handleSubmit={handleSubmit}
+      handleInputChange={handleInputChange}
+    />
+  );
+
+  return null;
+};
 //________________________________________
+
+//src/pages/profile-orders/profile-orders.tsx
+import { ProfileOrdersUI } from '@ui-pages';
+import { TOrder } from '@utils-types';
+import { FC } from 'react';
+
+export const ProfileOrders: FC = () => {
+  /** TODO: взять переменную из стора */
+  const orders: TOrder[] = [];
+
+  return <ProfileOrdersUI orders={orders} />;
+};
 //________________________________________
+
+//src/pages/register/register.tsx
+import { FC, SyntheticEvent, useState } from 'react';
+import { RegisterUI } from '@ui-pages';
+
+export const Register: FC = () => {
+  const [userName, setUserName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = (e: SyntheticEvent) => {
+    e.preventDefault();
+  };
+
+  return (
+    <RegisterUI
+      errorText=''
+      email={email}
+      userName={userName}
+      password={password}
+      setEmail={setEmail}
+      setPassword={setPassword}
+      setUserName={setUserName}
+      handleSubmit={handleSubmit}
+    />
+  );
+};
 //________________________________________
+
+//src/pages/reset-password/reset-password.tsx
+import { FC, SyntheticEvent, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { resetPasswordApi } from '@api';
+import { ResetPasswordUI } from '@ui-pages';
+
+export const ResetPassword: FC = () => {
+  const navigate = useNavigate();
+  const [password, setPassword] = useState('');
+  const [token, setToken] = useState('');
+  const [error, setError] = useState<Error | null>(null);
+
+  const handleSubmit = (e: SyntheticEvent) => {
+    e.preventDefault();
+    setError(null);
+    resetPasswordApi({ password, token })
+      .then(() => {
+        localStorage.removeItem('resetPassword');
+        navigate('/login');
+      })
+      .catch((err) => setError(err));
+  };
+
+  useEffect(() => {
+    if (!localStorage.getItem('resetPassword')) {
+      navigate('/forgot-password', { replace: true });
+    }
+  }, [navigate]);
+
+  return (
+    <ResetPasswordUI
+      errorText={error?.message}
+      password={password}
+      token={token}
+      setPassword={setPassword}
+      setToken={setToken}
+      handleSubmit={handleSubmit}
+    />
+  );
+};
 //________________________________________
+
+//src/services/store.ts
+import { configureStore } from '@reduxjs/toolkit';
+
+import {
+  TypedUseSelectorHook,
+  useDispatch as dispatchHook,
+  useSelector as selectorHook
+} from 'react-redux';
+
+const rootReducer = () => {}; // Заменить на импорт настоящего редьюсера
+
+const store = configureStore({
+  reducer: rootReducer,
+  devTools: process.env.NODE_ENV !== 'production'
+});
+
+export type RootState = ReturnType<typeof rootReducer>;
+
+export type AppDispatch = typeof store.dispatch;
+
+export const useDispatch: () => AppDispatch = () => dispatchHook();
+export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
+
+export default store;
 //________________________________________
+
+//src/utils/burger-api.ts
+import { setCookie, getCookie } from './cookie';
+import { TIngredient, TOrder, TOrdersData, TUser } from './types';
+
+const URL = process.env.BURGER_API_URL;
+
+const checkResponse = <T>(res: Response): Promise<T> =>
+  res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+
+type TServerResponse<T> = {
+  success: boolean;
+} & T;
+
+type TRefreshResponse = TServerResponse<{
+  refreshToken: string;
+  accessToken: string;
+}>;
+
+export const refreshToken = (): Promise<TRefreshResponse> =>
+  fetch(`${URL}/auth/token`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify({
+      token: localStorage.getItem('refreshToken')
+    })
+  })
+    .then((res) => checkResponse<TRefreshResponse>(res))
+    .then((refreshData) => {
+      if (!refreshData.success) {
+        return Promise.reject(refreshData);
+      }
+      localStorage.setItem('refreshToken', refreshData.refreshToken);
+      setCookie('accessToken', refreshData.accessToken);
+      return refreshData;
+    });
+
+export const fetchWithRefresh = async <T>(
+  url: RequestInfo,
+  options: RequestInit
+) => {
+  try {
+    const res = await fetch(url, options);
+    return await checkResponse<T>(res);
+  } catch (err) {
+    if ((err as { message: string }).message === 'jwt expired') {
+      const refreshData = await refreshToken();
+      if (options.headers) {
+        (options.headers as { [key: string]: string }).authorization =
+          refreshData.accessToken;
+      }
+      const res = await fetch(url, options);
+      return await checkResponse<T>(res);
+    } else {
+      return Promise.reject(err);
+    }
+  }
+};
+
+type TIngredientsResponse = TServerResponse<{
+  data: TIngredient[];
+}>;
+
+type TFeedsResponse = TServerResponse<{
+  orders: TOrder[];
+  total: number;
+  totalToday: number;
+}>;
+
+type TOrdersResponse = TServerResponse<{
+  data: TOrder[];
+}>;
+
+export const getIngredientsApi = () =>
+  fetch(`${URL}/ingredients`)
+    .then((res) => checkResponse<TIngredientsResponse>(res))
+    .then((data) => {
+      if (data?.success) return data.data;
+      return Promise.reject(data);
+    });
+
+export const getFeedsApi = () =>
+  fetch(`${URL}/orders/all`)
+    .then((res) => checkResponse<TFeedsResponse>(res))
+    .then((data) => {
+      if (data?.success) return data;
+      return Promise.reject(data);
+    });
+
+export const getOrdersApi = () =>
+  fetchWithRefresh<TFeedsResponse>(`${URL}/orders`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      authorization: getCookie('accessToken')
+    } as HeadersInit
+  }).then((data) => {
+    if (data?.success) return data.orders;
+    return Promise.reject(data);
+  });
+
+type TNewOrderResponse = TServerResponse<{
+  order: TOrder;
+  name: string;
+}>;
+
+export const orderBurgerApi = (data: string[]) =>
+  fetchWithRefresh<TNewOrderResponse>(`${URL}/orders`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      authorization: getCookie('accessToken')
+    } as HeadersInit,
+    body: JSON.stringify({
+      ingredients: data
+    })
+  }).then((data) => {
+    if (data?.success) return data;
+    return Promise.reject(data);
+  });
+
+type TOrderResponse = TServerResponse<{
+  orders: TOrder[];
+}>;
+
+export const getOrderByNumberApi = (number: number) =>
+  fetch(`${URL}/orders/${number}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then((res) => checkResponse<TOrderResponse>(res));
+
+export type TRegisterData = {
+  email: string;
+  name: string;
+  password: string;
+};
+
+type TAuthResponse = TServerResponse<{
+  refreshToken: string;
+  accessToken: string;
+  user: TUser;
+}>;
+
+export const registerUserApi = (data: TRegisterData) =>
+  fetch(`${URL}/auth/register`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify(data)
+  })
+    .then((res) => checkResponse<TAuthResponse>(res))
+    .then((data) => {
+      if (data?.success) return data;
+      return Promise.reject(data);
+    });
+
+export type TLoginData = {
+  email: string;
+  password: string;
+};
+
+export const loginUserApi = (data: TLoginData) =>
+  fetch(`${URL}/auth/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify(data)
+  })
+    .then((res) => checkResponse<TAuthResponse>(res))
+    .then((data) => {
+      if (data?.success) return data;
+      return Promise.reject(data);
+    });
+
+export const forgotPasswordApi = (data: { email: string }) =>
+  fetch(`${URL}/password-reset`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify(data)
+  })
+    .then((res) => checkResponse<TServerResponse<{}>>(res))
+    .then((data) => {
+      if (data?.success) return data;
+      return Promise.reject(data);
+    });
+
+export const resetPasswordApi = (data: { password: string; token: string }) =>
+  fetch(`${URL}/password-reset/reset`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify(data)
+  })
+    .then((res) => checkResponse<TServerResponse<{}>>(res))
+    .then((data) => {
+      if (data?.success) return data;
+      return Promise.reject(data);
+    });
+
+type TUserResponse = TServerResponse<{ user: TUser }>;
+
+export const getUserApi = () =>
+  fetchWithRefresh<TUserResponse>(`${URL}/auth/user`, {
+    headers: {
+      authorization: getCookie('accessToken')
+    } as HeadersInit
+  });
+
+export const updateUserApi = (user: Partial<TRegisterData>) =>
+  fetchWithRefresh<TUserResponse>(`${URL}/auth/user`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      authorization: getCookie('accessToken')
+    } as HeadersInit,
+    body: JSON.stringify(user)
+  });
+
+export const logoutApi = () =>
+  fetch(`${URL}/auth/logout`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify({
+      token: localStorage.getItem('refreshToken')
+    })
+  }).then((res) => checkResponse<TServerResponse<{}>>(res));
 //________________________________________
+
+//src/utils/cookie.ts
+export function getCookie(name: string): string | undefined {
+  const matches = document.cookie.match(
+    new RegExp(
+      '(?:^|; )' +
+        // eslint-disable-next-line no-useless-escape
+        name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') +
+        '=([^;]*)'
+    )
+  );
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
+export function setCookie(
+  name: string,
+  value: string,
+  props: { [key: string]: string | number | Date | boolean } = {}
+) {
+  props = {
+    path: '/',
+    ...props
+  };
+
+  let exp = props.expires;
+  if (exp && typeof exp === 'number') {
+    const d = new Date();
+    d.setTime(d.getTime() + exp * 1000);
+    exp = props.expires = d;
+  }
+
+  if (exp && exp instanceof Date) {
+    props.expires = exp.toUTCString();
+  }
+  value = encodeURIComponent(value);
+  let updatedCookie = name + '=' + value;
+  for (const propName in props) {
+    updatedCookie += '; ' + propName;
+    const propValue = props[propName];
+    if (propValue !== true) {
+      updatedCookie += '=' + propValue;
+    }
+  }
+  document.cookie = updatedCookie;
+}
+
+export function deleteCookie(name: string) {
+  setCookie(name, '', { expires: -1 });
+}
 //________________________________________
+
+
 //________________________________________
 //________________________________________
 //________________________________________

@@ -1,4 +1,4 @@
-//src/components/pages/login/login.tsx
+//src/pages/login/login.tsx
 import { FC, SyntheticEvent, useState } from 'react';
 import { LoginUI } from '@ui-pages';
 

@@ -1,4 +1,4 @@
-//src/components/services/store.ts
+//src/services/store.ts
 import { configureStore } from '@reduxjs/toolkit';
 
 import {
