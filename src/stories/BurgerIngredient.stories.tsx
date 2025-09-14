@@ -36,7 +36,8 @@ export const DefaultIngredient: Story = {
       price: 123,
       image: '',
       image_large: '',
-      image_mobile: ''
+      image_mobile: '',
+      __v: 0
     },
     count: 2,
     locationState: {

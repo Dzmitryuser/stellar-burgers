@@ -11,7 +11,7 @@
     "@types/node": "^16.18.23",
     "@types/react": "^18.0.31",
     "@types/react-dom": "^18.0.11",
-    "@types/uuid": "^9.0.1",
+    "@types/uuid": "^9.0.8",
     "@zlden/react-developer-burger-ui-components": "^1.15.0",
     "clsx": "^2.0.0",
     "react": "^18.2.0",

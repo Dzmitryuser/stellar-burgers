@@ -1,5 +1,5 @@
 //src/pages/constructor-page/constructor-page.tsx
-import { useSelector } from '../../services/store';
+import { useAppSelector } from '../../services/hooks';
 
 import styles from './constructor-page.module.css';
 
