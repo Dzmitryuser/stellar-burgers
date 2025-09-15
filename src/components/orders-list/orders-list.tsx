@@ -1,6 +1,5 @@
 //src/components/orders-list/orders-list.tsx
 import { FC, memo } from 'react';
-
 import { OrdersListProps } from './type';
 import { OrdersListUI } from '@ui';
 

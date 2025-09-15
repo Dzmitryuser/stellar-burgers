@@ -29,3 +29,6 @@ export const feedLoadingSelector = (state: RootState) => state.feed.loading;
 export const userOrdersSelector = (state: RootState) => state.userOrders.orders;
 export const userOrdersLoadingSelector = (state: RootState) =>
   state.userOrders.loading;
+
+export const userOrdersErrorSelector = (state: RootState) =>
+  state.userOrders.error;

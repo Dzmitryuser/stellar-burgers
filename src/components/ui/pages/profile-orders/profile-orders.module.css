@@ -1,15 +1,12 @@
-.menu {
-  width: 320px;
-}
-
-.main {
-  display: flex;
-  height: 100%;
-  width: 1240px;
-  overflow: hidden;
-  margin: 0 auto;
-}
-
-.orders {
+.container {
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.ordersContainer {
+  flex: 1;
+  overflow-y: auto; /* Скролл только для заказов */
+  composes: custom-scroll from global;
 }

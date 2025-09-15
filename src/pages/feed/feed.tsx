@@ -17,6 +17,13 @@ export const Feed: FC = () => {
 
   useEffect(() => {
     dispatch(fetchFeeds());
+
+    // Автоматическое обновление каждые 30 секунд
+    const interval = setInterval(() => {
+      dispatch(fetchFeeds());
+    }, 30000);
+
+    return () => clearInterval(interval);
   }, [dispatch]);
 
   const handleGetFeeds = () => {
