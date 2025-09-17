@@ -1,0 +1,19 @@
+.main {
+  composes: container from global;
+  composes: pt-10 from global;
+  display: flex;
+  gap: 60px;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.menu {
+  width: 320px;
+  flex-shrink: 0;
+}
+
+.content {
+  flex: 1;
+  max-width: 480px;
+}

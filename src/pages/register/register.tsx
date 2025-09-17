@@ -22,7 +22,6 @@ export const Register: FC = () => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    console.log('Register form submitted');
 
     dispatch(
       registerUser({

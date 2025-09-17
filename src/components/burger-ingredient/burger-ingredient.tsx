@@ -11,7 +11,6 @@ export const BurgerIngredient: FC<TBurgerIngredientProps> = memo(
     const location = useLocation();
 
     const handleAdd = () => {
-      console.log('Adding ingredient:', ingredient.name);
       if (ingredient.type === 'bun') {
         dispatch(addBun(ingredient));
       } else {

@@ -15,8 +15,6 @@ export const OrderCardUI: FC<OrderCardUIProps> = memo(
   ({ orderInfo, maxIngredients, locationState }) => {
     const location = useLocation();
 
-    console.log('OrderCardUI rendering:', orderInfo.number);
-
     return (
       <Link
         to={`${orderInfo.number}`}

@@ -46,7 +46,6 @@ export const BurgerConstructor: FC = () => {
     dispatch(createOrder(ingredients))
       .unwrap()
       .then(() => {
-        console.log('Order created successfully, refreshing data...');
         dispatch(clearConstructor());
         // Обновляем ленту заказов и историю заказов
         dispatch(fetchFeeds());

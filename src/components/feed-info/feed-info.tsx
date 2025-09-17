@@ -23,13 +23,6 @@ export const FeedInfo: FC = () => {
   const readyOrders = getOrders(orders, 'done');
   const pendingOrders = getOrders(orders, 'pending');
 
-  console.log('FeedInfo data:', {
-    total,
-    totalToday,
-    readyOrders: readyOrders.length,
-    pendingOrders: pendingOrders.length
-  });
-
   return (
     <FeedInfoUI
       readyOrders={readyOrders}

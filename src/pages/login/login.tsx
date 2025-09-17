@@ -21,7 +21,6 @@ export const Login: FC = () => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    console.log('Login form submitted');
 
     dispatch(
       loginUser({
