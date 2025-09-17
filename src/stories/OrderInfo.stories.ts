@@ -1,13 +1,12 @@
 import { OrderInfoUI } from '@ui';
 import type { Meta, StoryObj } from '@storybook/react';
+import { TIngredient, TOrder } from '@utils-types';
 
 const meta = {
   title: 'Example/OrderInfo',
   component: OrderInfoUI,
-  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
   parameters: {
-    // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
     layout: 'fullscreen'
   }
 } satisfies Meta<typeof OrderInfoUI>;
@@ -15,35 +14,50 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const mockIngredients: TIngredient[] = [
+  {
+    _id: '211',
+    name: 'Булка',
+    type: 'bun',
+    proteins: 12,
+    fat: 23,
+    carbohydrates: 45,
+    calories: 56,
+    price: 67,
+    image: '',
+    image_large: '',
+    image_mobile: '',
+    __v: 0
+  },
+  {
+    _id: '212',
+    name: 'Начинка',
+    type: 'main',
+    proteins: 10,
+    fat: 20,
+    carbohydrates: 30,
+    calories: 40,
+    price: 50,
+    image: '',
+    image_large: '',
+    image_mobile: '',
+    __v: 0
+  }
+];
+
+const mockOrder: TOrder = {
+  _id: '233',
+  status: 'done',
+  name: 'Order',
+  createdAt: '2024-01-25T10:00:00.000Z',
+  updatedAt: '2024-01-25T10:30:00.000Z',
+  number: 2,
+  ingredients: ['211', '212', '211'] // bun, filling, bun
+};
+
 export const DefaultOrderInfo: Story = {
   args: {
-    orderInfo: {
-      ingredientsInfo: {
-        bun: {
-          _id: '211',
-          name: 'Булка',
-          type: 'bun',
-          proteins: 12,
-          fat: 23,
-          carbohydrates: 45,
-          calories: 56,
-          price: 67,
-          image: '',
-          image_large: '',
-          image_mobile: '',
-          count: 2,
-          __v: 0
-        }
-      },
-      date: new Date('2024-01-25'),
-      total: 134,
-      _id: '233',
-      status: 'ready',
-      name: 'Order',
-      createdAt: '',
-      updatedAt: '',
-      number: 2,
-      ingredients: ['Булка', 'Начинка']
-    }
+    orderData: mockOrder,
+    ingredients: mockIngredients
   }
 };

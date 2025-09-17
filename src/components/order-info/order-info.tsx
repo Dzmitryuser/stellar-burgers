@@ -1,68 +1,58 @@
 //src/components/order-info/order-info.tsx
-import { FC, useMemo } from 'react';
+import { FC, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useAppSelector } from '../../services/hooks';
+import { ingredientsSelector } from '../../services/selectors';
+import { getOrderByNumberApi } from '@api';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
-import { TIngredient } from '@utils-types';
+import { TIngredient, TOrder } from '@utils-types';
 
 export const OrderInfo: FC = () => {
-  /** TODO: взять переменные orderData и ingredients из стора */
-  const orderData = {
-    createdAt: '',
-    ingredients: [],
-    _id: '',
-    status: '',
-    name: '',
-    updatedAt: 'string',
-    number: 0
-  };
+  const { number } = useParams();
+  const ingredients = useAppSelector(ingredientsSelector);
+  const [orderData, setOrderData] = useState<TOrder | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const ingredients: TIngredient[] = [];
+  useEffect(() => {
+    if (!number) return;
 
-  /* Готовим данные для отображения */
-  const orderInfo = useMemo(() => {
-    if (!orderData || !ingredients.length) return null;
+    const fetchOrder = async () => {
+      try {
+        setLoading(true);
+        const orderNumber = parseInt(number, 10);
+        const response = await getOrderByNumberApi(orderNumber);
 
-    const date = new Date(orderData.createdAt);
-
-    type TIngredientsWithCount = {
-      [key: string]: TIngredient & { count: number };
-    };
-
-    const ingredientsInfo = orderData.ingredients.reduce(
-      (acc: TIngredientsWithCount, item) => {
-        if (!acc[item]) {
-          const ingredient = ingredients.find((ing) => ing._id === item);
-          if (ingredient) {
-            acc[item] = {
-              ...ingredient,
-              count: 1
-            };
-          }
+        if (response.orders && response.orders.length > 0) {
+          setOrderData(response.orders[0]);
         } else {
-          acc[item].count++;
+          setError('Заказ не найден');
         }
-
-        return acc;
-      },
-      {}
-    );
-
-    const total = Object.values(ingredientsInfo).reduce(
-      (acc, item) => acc + item.price * item.count,
-      0
-    );
-
-    return {
-      ...orderData,
-      ingredientsInfo,
-      date,
-      total
+      } catch (err) {
+        setError('Ошибка при загрузке заказа');
+        console.error('Failed to fetch order:', err);
+      } finally {
+        setLoading(false);
+      }
     };
-  }, [orderData, ingredients]);
 
-  if (!orderInfo) {
+    fetchOrder();
+  }, [number]);
+
+  if (loading) {
     return <Preloader />;
   }
 
-  return <OrderInfoUI orderInfo={orderInfo} />;
+  if (error) {
+    return <div className='text text_type_main-default p-10'>{error}</div>;
+  }
+
+  if (!orderData) {
+    return (
+      <div className='text text_type_main-default p-10'>Заказ не найден</div>
+    );
+  }
+
+  return <OrderInfoUI orderData={orderData} ingredients={ingredients} />;
 };
