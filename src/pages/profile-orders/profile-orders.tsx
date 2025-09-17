@@ -20,7 +20,6 @@ export const ProfileOrders: FC = () => {
   const error = useAppSelector(userOrdersErrorSelector);
 
   useEffect(() => {
-    console.log('Fetching user orders...');
     dispatch(fetchUserOrders());
   }, [dispatch]);
 
