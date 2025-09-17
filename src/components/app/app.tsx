@@ -39,7 +39,7 @@ const App = () => {
     <div className={styles.app}>
       <AppHeader />
 
-      <Routes>
+      <Routes location={background || location}>
         {/* Основные маршруты */}
         <Route path='/' element={<ConstructorPage />} />
         <Route
@@ -92,7 +92,7 @@ const App = () => {
         />
         <Route path='/feed' element={<Feed />} />
 
-        {/* Маршруты для модалок - также должны работать как отдельные страницы */}
+        {/* Маршруты для отдельных страниц (без модалок) */}
         <Route path='/ingredients/:id' element={<IngredientDetails />} />
         <Route path='/feed/:number' element={<OrderInfo />} />
         <Route
