@@ -1,9 +1,16 @@
 .link {
+  composes: text from global;
+  composes: text_type_main-medium from global;
+  composes: text_color_inactive from global;
+  composes: pt-4 from global;
+  composes: pb-4 from global;
   display: block;
-  width: 100%;
   text-decoration: none;
-  display: block;
-  color: #8585ad;
+  transition: color 0.3s ease;
+}
+
+.link:hover {
+  color: #f2f2f3;
 }
 
 .link_active {
@@ -11,13 +18,19 @@
 }
 
 .button {
-  text-decoration: none;
-  display: block;
-  color: #8585ad;
-  background-color: unset;
+  composes: text from global;
+  composes: text_type_main-medium from global;
+  composes: text_color_inactive from global;
+  composes: pt-4 from global;
+  composes: pb-4 from global;
+  background: none;
   border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+  transition: color 0.3s ease;
 }
 
 .button:hover {
-  cursor: pointer;
+  color: #f2f2f3;
 }

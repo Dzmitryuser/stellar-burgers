@@ -1,3 +1,4 @@
+//src/components/ui/pages/reset-password/reset-password.tsx
 import { FC } from 'react';
 import {
   Input,

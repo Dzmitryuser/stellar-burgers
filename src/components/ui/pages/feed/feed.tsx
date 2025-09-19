@@ -1,3 +1,4 @@
+//src/components/ui/pages/feed/feed.tsx
 import { FC, memo } from 'react';
 
 import styles from './feed.module.css';

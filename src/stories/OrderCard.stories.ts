@@ -30,7 +30,8 @@ export const DefaultOrderCard: Story = {
           price: 123,
           image: '',
           image_large: '',
-          image_mobile: ''
+          image_mobile: '',
+          __v: 0
         }
       ],
       ingredientsToShow: [
@@ -45,7 +46,8 @@ export const DefaultOrderCard: Story = {
           price: 123,
           image: '',
           image_large: '',
-          image_mobile: ''
+          image_mobile: '',
+          __v: 0
         },
         {
           _id: '111',
@@ -58,7 +60,8 @@ export const DefaultOrderCard: Story = {
           price: 123,
           image: '',
           image_large: '',
-          image_mobile: ''
+          image_mobile: '',
+          __v: 0
         }
       ],
       remains: 2,

@@ -1,3 +1,4 @@
+//src/utils/cookie.ts
 export function getCookie(name: string): string | undefined {
   const matches = document.cookie.match(
     new RegExp(

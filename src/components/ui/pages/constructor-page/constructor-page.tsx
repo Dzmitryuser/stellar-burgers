@@ -1,3 +1,4 @@
+//src/components/ui/pages/constructor-page/constructor-page.tsx
 import { FC } from 'react';
 
 import styles from './constructor-page.module.css';

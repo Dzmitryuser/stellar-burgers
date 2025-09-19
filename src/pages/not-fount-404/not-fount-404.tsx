@@ -1,3 +1,4 @@
+//src/pages/not-fount-404/not-fount-404.tsx
 import { FC } from 'react';
 
 export const NotFound404: FC = () => (

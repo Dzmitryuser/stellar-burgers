@@ -1,3 +1,4 @@
+//src/components/ui/burger-constructor/burger-constructor.tsx
 import React, { FC } from 'react';
 import {
   Button,

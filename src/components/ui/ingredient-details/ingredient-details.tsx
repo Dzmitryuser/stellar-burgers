@@ -1,14 +1,17 @@
+//src/components/ui/ingredient-details/ingredient-details.tsx
 import React, { FC, memo } from 'react';
 import styles from './ingredient-details.module.css';
 import { IngredientDetailsUIProps } from './type';
 
 export const IngredientDetailsUI: FC<IngredientDetailsUIProps> = memo(
   ({ ingredientData }) => {
+    // Убираем onClose из пропсов
     const { name, image_large, calories, proteins, fat, carbohydrates } =
       ingredientData;
 
     return (
       <div className={styles.content}>
+        {/* Убираем кнопку закрытия - она уже есть в Modal */}
         <img
           className={styles.img}
           alt='изображение ингредиента.'

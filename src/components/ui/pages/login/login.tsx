@@ -1,4 +1,5 @@
-import { FC, useState } from 'react';
+//src/components/ui/pages/login/login.tsx
+import { FC } from 'react';
 import {
   Input,
   Button,
@@ -14,7 +15,8 @@ export const LoginUI: FC<LoginUIProps> = ({
   errorText,
   handleSubmit,
   password,
-  setPassword
+  setPassword,
+  loading
 }) => (
   <main className={styles.container}>
     <div className={`pt-6 ${styles.wrapCenter}`}>
@@ -45,8 +47,13 @@ export const LoginUI: FC<LoginUIProps> = ({
             />
           </div>
           <div className={`pb-6 ${styles.button}`}>
-            <Button type='primary' size='medium' htmlType='submit'>
-              Войти
+            <Button
+              type='primary'
+              size='medium'
+              htmlType='submit'
+              disabled={loading}
+            >
+              {loading ? 'Вход...' : 'Войти'}
             </Button>
           </div>
           {errorText && (
