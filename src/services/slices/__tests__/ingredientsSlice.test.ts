@@ -1,4 +1,11 @@
 //stellar-burgers\src\services\slices\__tests__\ingredientsSlice.test.ts
+jest.mock('../../../utils/burger-api', () => ({
+  getIngredientsApi: jest.fn()
+}));
+
+jest.mock('../../../utils/types', () => ({
+  TIngredient: {}
+}));
 
 import { ingredientsReducer, fetchIngredients } from '../ingredientsSlice';
 import { TIngredient } from '@utils-types';

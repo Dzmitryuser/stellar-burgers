@@ -1,4 +1,12 @@
 //stellar-burgers\src\services\slices\__tests__\feedSlice.test.ts
+jest.mock('../../../utils/burger-api', () => ({
+  getFeedsApi: jest.fn()
+}));
+
+jest.mock('../../../utils/types', () => ({
+  TOrder: {},
+  TOrdersData: {}
+}));
 
 import { feedReducer, fetchFeeds } from '../feedSlice';
 import { TOrder } from '@utils-types';

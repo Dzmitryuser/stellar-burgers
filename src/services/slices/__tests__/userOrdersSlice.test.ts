@@ -1,4 +1,11 @@
 //stellar-burgers\src\services\slices\__tests__\userOrdersSlice.test.ts
+jest.mock('../../../utils/burger-api', () => ({
+  getOrdersApi: jest.fn()
+}));
+
+jest.mock('../../../utils/types', () => ({
+  TOrder: {}
+}));
 
 import { userOrdersReducer, fetchUserOrders } from '../userOrdersSlice';
 import { TOrder } from '@utils-types';
