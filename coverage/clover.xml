@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1758469884706" clover="3.2.0">
+  <project timestamp="1758469884706" name="All files">
+    <metrics statements="18" coveredstatements="18" conditionals="0" coveredconditionals="0" methods="7" coveredmethods="7" elements="25" coveredelements="25" complexity="0" loc="18" ncloc="18" packages="1" files="1" classes="1"/>
+    <file name="constructorSlice.ts" path="C:\Users\Laptop\Desktop\stellar-burgers\src\services\slices\constructorSlice.ts">
+      <metrics statements="18" coveredstatements="18" conditionals="0" coveredconditionals="0" methods="7" coveredmethods="7"/>
+      <line num="1" count="1" type="stmt"/>
+      <line num="3" count="1" type="stmt"/>
+      <line num="10" count="1" type="stmt"/>
+      <line num="15" count="1" type="stmt"/>
+      <line num="20" count="2" type="stmt"/>
+      <line num="24" count="5" type="stmt"/>
+      <line num="27" count="5" type="stmt"/>
+      <line num="28" count="5" type="stmt"/>
+      <line num="32" count="1" type="stmt"/>
+      <line num="33" count="1" type="stmt"/>
+      <line num="40" count="1" type="stmt"/>
+      <line num="41" count="1" type="stmt"/>
+      <line num="42" count="1" type="stmt"/>
+      <line num="43" count="1" type="stmt"/>
+      <line num="46" count="1" type="stmt"/>
+      <line num="47" count="1" type="stmt"/>
+      <line num="53" count="1" type="stmt"/>
+      <line num="59" count="1" type="stmt"/>
+    </file>
+  </project>
+</coverage>
