@@ -1,6 +1,6 @@
+//stellar-burgers\cypress\e2e\constructor.cy.ts
 describe('Burger Constructor', () => {
   beforeEach(() => {
-    // Мокаем API ингредиентов
     cy.intercept('GET', '**/api/ingredients', {
       fixture: 'ingredients.json'
     }).as('getIngredients');
@@ -17,23 +17,53 @@ describe('Burger Constructor', () => {
 
   it('should open and close ingredient modal', () => {
     cy.get('[data-testid=ingredient-item]').first().click();
-    
+
     cy.get('[data-testid=modal]').should('be.visible');
     cy.contains('Детали ингредиента').should('be.visible');
     cy.contains('Краторная булка N-200i').should('be.visible');
-    
+
+    // Закрытие по крестику
     cy.get('[data-testid=modal-close]').click();
+    cy.get('[data-testid=modal]').should('not.exist');
+
+    // Закрытие по оверлею
+    cy.get('[data-testid=ingredient-item]').first().click();
+    cy.get('[data-testid=modal]').should('be.visible');
+    cy.get('[data-testid=modal-overlay]').click({ force: true });
     cy.get('[data-testid=modal]').should('not.exist');
   });
 
-  it('should show empty constructor initially', () => {
-    cy.get('[data-testid=no-bun-placeholder]').should('be.visible');
-    cy.get('[data-testid=constructor-ingredients]').should('be.empty');
+  it('should add bun to constructor', () => {
+    cy.get('[data-testid=ingredient-item]').first().as('bun');
+    cy.get('[data-testid=constructor-bun-top]').as('bunTop');
+    cy.get('[data-testid=constructor-bun-bottom]').as('bunBottom');
+
+    // Перетаскивание булки
+    cy.get('@bun').trigger('dragstart');
+    cy.get('@bunTop').trigger('drop');
+
+    cy.get('@bunTop').should('contain', 'Краторная булка N-200i');
+    cy.get('@bunBottom').should('contain', 'Краторная булка N-200i');
+  });
+
+  it('should add ingredient to constructor', () => {
+    cy.get('[data-testid=ingredient-item]').eq(1).as('ingredient');
+    cy.get('[data-testid=constructor-ingredients]').as('constructor');
+
+    // Перетаскивание начинки
+    cy.get('@ingredient').trigger('dragstart');
+    cy.get('@constructor').trigger('drop');
+
+    cy.get('@constructor').should('contain', 'Говяжий метеорит (отбивная)');
   });
 
   it('should enable order button when bun is added', () => {
-    // Здесь будет тест добавления ингредиентов
-    // Пока проверяем, что кнопка disabled
     cy.get('[data-testid=order-button]').should('be.disabled');
+
+    // Добавляем булку
+    cy.get('[data-testid=ingredient-item]').first().trigger('dragstart');
+    cy.get('[data-testid=constructor-bun-top]').trigger('drop');
+
+    cy.get('[data-testid=order-button]').should('not.be.disabled');
   });
 });

@@ -1,3 +1,4 @@
+//stellar-burgers\src\services\slices\feedSlice.ts
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getFeedsApi } from '@api';
 import { TOrder, TOrdersData } from '@utils-types';

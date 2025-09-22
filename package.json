@@ -95,12 +95,12 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run",
-    "cypress:component": "cypress open --component"
+    "cypress:run": "cypress run"
   },
   "eslintConfig": {
     "extends": [
       "plugin:storybook/recommended"
     ]
   }
+
 }

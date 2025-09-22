@@ -1,5 +1,12 @@
+//stellar-burgers\src\services\slices\__tests__\constructorSlice.test.ts
 import { constructorReducer } from '../constructorSlice';
-import { addBun, addIngredient, removeIngredient, moveIngredient, clearConstructor } from '../constructorSlice';
+import {
+  addBun,
+  addIngredient,
+  removeIngredient,
+  moveIngredient,
+  clearConstructor
+} from '../constructorSlice';
 import { TIngredient } from '@utils-types';
 
 describe('constructor reducer', () => {
@@ -55,7 +62,7 @@ describe('constructor reducer', () => {
   it('should handle removeIngredient', () => {
     let state = constructorReducer(undefined, addIngredient(mockIngredient));
     const ingredientId = state.ingredients[0].id;
-    
+
     state = constructorReducer(state, removeIngredient(ingredientId));
     expect(state.ingredients).toHaveLength(0);
   });
@@ -68,11 +75,11 @@ describe('constructor reducer', () => {
 
     let state = constructorReducer(undefined, addIngredient(mockIngredient));
     state = constructorReducer(state, addIngredient(mockIngredient2));
-    
+
     const fromIndex = 0;
     const toIndex = 1;
     state = constructorReducer(state, moveIngredient({ fromIndex, toIndex }));
-    
+
     expect(state.ingredients[0]._id).toBe('3');
     expect(state.ingredients[1]._id).toBe('2');
   });
@@ -80,7 +87,7 @@ describe('constructor reducer', () => {
   it('should handle clearConstructor', () => {
     let state = constructorReducer(undefined, addBun(mockBun));
     state = constructorReducer(state, addIngredient(mockIngredient));
-    
+
     state = constructorReducer(state, clearConstructor());
     expect(state.bun).toBeNull();
     expect(state.ingredients).toHaveLength(0);
