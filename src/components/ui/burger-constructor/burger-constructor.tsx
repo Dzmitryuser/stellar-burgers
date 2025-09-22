@@ -19,9 +19,9 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
   onOrderClick,
   closeOrderModal
 }) => (
-  <section className={styles.burger_constructor}>
+  <section className={styles.burger_constructor} data-testid="constructor">
     {constructorItems.bun ? (
-      <div className={`${styles.element} mb-4 mr-4`}>
+      <div className={`${styles.element} mb-4 mr-4`} data-testid="constructor-bun-top">
         <ConstructorElement
           type='top'
           isLocked
@@ -32,12 +32,12 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
       </div>
     ) : (
       <div
-        className={`${styles.noBuns} ${styles.noBunsTop} ml-8 mb-4 mr-5 text text_type_main-default`}
+        className={`${styles.noBuns} ${styles.noBunsTop} ml-8 mb-4 mr-5 text text_type_main-default`} data-testid="no-bun-placeholder"
       >
         Выберите булки
       </div>
     )}
-    <ul className={styles.elements}>
+    <ul className={styles.elements} data-testid="constructor-ingredients">
       {constructorItems.ingredients.length > 0 ? (
         constructorItems.ingredients.map(
           (item: TConstructorIngredient, index: number) => (
@@ -79,7 +79,7 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
         <p className={`text ${styles.text} mr-2`}>{price}</p>
         <CurrencyIcon type='primary' />
       </div>
-      <Button
+      <Button data-testid="order-button" 
         htmlType='button'
         type='primary'
         size='large'
