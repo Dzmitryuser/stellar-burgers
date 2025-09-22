@@ -1,3 +1,12 @@
+//stellar-burgers\src\services\slices\__tests__\ingredientsSlice.test.ts
+jest.mock('../../../utils/burger-api', () => ({
+  getIngredientsApi: jest.fn()
+}));
+
+jest.mock('../../../utils/types', () => ({
+  TIngredient: {}
+}));
+
 import { ingredientsReducer, fetchIngredients } from '../ingredientsSlice';
 import { TIngredient } from '@utils-types';
 
@@ -19,9 +28,17 @@ describe('ingredients reducer', () => {
     }
   ];
 
+  it('should handle initial state', () => {
+    expect(ingredientsReducer(undefined, { type: 'unknown' })).toEqual({
+      ingredients: [],
+      loading: false,
+      error: null
+    });
+  });
+
   it('should handle fetchIngredients.pending', () => {
     const state = ingredientsReducer(
-      undefined, 
+      undefined,
       fetchIngredients.pending('requestId')
     );
     expect(state).toEqual({
@@ -33,7 +50,7 @@ describe('ingredients reducer', () => {
 
   it('should handle fetchIngredients.fulfilled', () => {
     const state = ingredientsReducer(
-      undefined, 
+      undefined,
       fetchIngredients.fulfilled(mockIngredients, 'requestId')
     );
     expect(state).toEqual({

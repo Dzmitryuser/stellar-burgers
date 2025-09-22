@@ -1,3 +1,13 @@
+//stellar-burgers\src\services\slices\__tests__\feedSlice.test.ts
+jest.mock('../../../utils/burger-api', () => ({
+  getFeedsApi: jest.fn()
+}));
+
+jest.mock('../../../utils/types', () => ({
+  TOrder: {},
+  TOrdersData: {}
+}));
+
 import { feedReducer, fetchFeeds } from '../feedSlice';
 import { TOrder } from '@utils-types';
 
@@ -14,11 +24,18 @@ describe('feed reducer', () => {
     }
   ];
 
+  it('should handle initial state', () => {
+    expect(feedReducer(undefined, { type: 'unknown' })).toEqual({
+      orders: [],
+      total: 0,
+      totalToday: 0,
+      loading: false,
+      error: null
+    });
+  });
+
   it('should handle fetchFeeds.pending', () => {
-    const state = feedReducer(
-      undefined, 
-      fetchFeeds.pending('requestId')
-    );
+    const state = feedReducer(undefined, fetchFeeds.pending('requestId'));
     expect(state).toEqual({
       orders: [],
       total: 0,
@@ -36,7 +53,7 @@ describe('feed reducer', () => {
       totalToday: 10
     };
     const state = feedReducer(
-      undefined, 
+      undefined,
       fetchFeeds.fulfilled(response, 'requestId')
     );
     expect(state).toEqual({

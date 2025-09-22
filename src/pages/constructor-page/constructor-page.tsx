@@ -1,3 +1,4 @@
+//stellar-burgers\src\pages\constructor-page\constructor-page.tsx
 import { FC } from 'react';
 import { useAppSelector } from '../../services/hooks';
 import { ingredientsLoadingSelector } from '../../services/selectors';

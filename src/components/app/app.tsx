@@ -1,3 +1,4 @@
+//stellar-burgers\src\components\app\app.tsx
 import { useEffect } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../services/hooks';

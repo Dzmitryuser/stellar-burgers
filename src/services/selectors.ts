@@ -1,3 +1,4 @@
+//stellar-burgers\src\services\selectors.ts
 import { RootState } from './reducers';
 
 export const ingredientsSelector = (state: RootState) =>

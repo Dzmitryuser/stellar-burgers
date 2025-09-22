@@ -1,3 +1,4 @@
+//stellar-burgers\src\services\reducers.ts
 import { combineReducers } from 'redux';
 import { ingredientsReducer } from './slices/ingredientsSlice';
 import { constructorReducer } from './slices/constructorSlice';

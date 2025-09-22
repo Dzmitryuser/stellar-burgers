@@ -1,3 +1,4 @@
+//stellar-burgers\src\services\store.ts
 import { configureStore } from '@reduxjs/toolkit';
 import { rootReducer, RootState } from './reducers';
 

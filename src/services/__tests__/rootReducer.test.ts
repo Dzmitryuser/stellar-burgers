@@ -1,9 +1,18 @@
+//stellar-burgers\src\services\__tests__\rootReducer.test.ts
+jest.mock('../../utils/burger-api', () => ({
+  getIngredientsApi: jest.fn()
+}));
+
+jest.mock('../../utils/types', () => ({
+  TIngredient: {}
+}));
+
 import { rootReducer } from '../reducers';
 
 describe('rootReducer', () => {
   it('should return initial state for unknown action', () => {
     const state = rootReducer(undefined, { type: 'UNKNOWN_ACTION' });
-    
+
     expect(state).toEqual({
       ingredients: {
         ingredients: [],

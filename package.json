@@ -85,7 +85,7 @@
     "url-loader": "^4.1.1"
   },
   "scripts": {
-    "start": "webpack serve --mode=development",
+    "start": "webpack serve --mode=development --port 4000",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
@@ -95,12 +95,12 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run",
-    "cypress:component": "cypress open --component"
+    "cypress:run": "cypress run"
   },
   "eslintConfig": {
     "extends": [
       "plugin:storybook/recommended"
     ]
   }
+
 }
