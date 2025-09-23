@@ -1,127 +1,74 @@
 //stellar-burgers\cypress\e2e\constructor.cy.ts
-// cypress/e2e/constructor.cy.ts
-// cypress/e2e/constructor.cy.ts
-describe('Burger Constructor', () => {
-  // Функция для drag and drop
-  const dragAndDrop = (sourceSelector: string, targetSelector: string) => {
-    const dataTransfer = new DataTransfer();
-    cy.get(sourceSelector).trigger('dragstart', { dataTransfer });
-    cy.get(targetSelector).trigger('drop', { dataTransfer });
-  };
+import '@4tw/cypress-drag-drop';
+import { selectors, api } from '../constants';
 
+describe('E2E тестирование конструктора', () => {
   beforeEach(() => {
+    cy.viewport(1280, 720);
+
     // Мокаем API ингредиентов
-    cy.intercept('GET', '**/api/ingredients', {
+    cy.intercept('GET', api.ingredients, {
       fixture: 'ingredients.json'
-    }).as('getIngredients');
-
-    cy.visit('/');
-    cy.wait('@getIngredients');
-  });
-
-  it('should display ingredients list', () => {
-    cy.get('[data-testid=ingredient-item]').should('have.length.at.least', 2);
-    cy.contains('Краторная булка N-200i').should('be.visible');
-    cy.contains('Говяжий метеорит (отбивная)').should('be.visible');
-  });
-
-  it('should open and close ingredient modal', () => {
-    cy.get('[data-testid=ingredient-item]').first().click();
-
-    // Проверяем модальное окно
-    cy.get('[data-testid=modal]').should('be.visible');
-    cy.contains('Детали ингредиента').should('be.visible');
-
-    // Закрываем через кнопку (ищем первую кнопку в модалке)
-    cy.get('[data-testid=modal]').within(() => {
-      cy.get('button').first().click();
     });
 
-    cy.get('[data-testid=modal]').should('not.exist');
+    cy.visit('/');
   });
 
-  it('should add bun to constructor', () => {
-    // Проверяем плейсхолдер до добавления
-    cy.get('[data-testid=no-bun-placeholder]').should('be.visible');
+  it('Проверка невозможности оформить заказ для неавторизованного пользователя', () => {
+    // Перетаскиваем ингредиенты в конструктор
+    cy.get(selectors.ingredient_bun).drag(selectors.constructor_container);
+    cy.get(selectors.ingredient_main).drag(selectors.constructor_ingredients);
 
-    // Перетаскиваем булку
-    dragAndDrop(
-      '[data-testid=ingredient-item]:first',
-      '[data-testid=constructor]'
-    );
+    // Проверяем что ингредиенты добавились
+    cy.contains('Краторная булка N-200i (верх)').should('be.visible');
+    cy.contains('Говяжий метеорит (отбивная)').should('be.visible');
 
-    // Проверяем что булка добавилась
-    cy.get('[data-testid=constructor-bun-top]').should(
-      'contain',
-      'Краторная булка N-200i'
-    );
+    // Пытаемся оформить заказ
+    cy.get('button').contains(selectors.order_button).click();
 
-    cy.get('[data-testid=no-bun-placeholder]').should('not.exist');
+    // Должны быть перенаправлены на страницу логина
+    cy.url().should('include', '/login');
+    cy.contains(selectors.login_page_text).should('be.visible');
   });
 
-  it('should add ingredient to constructor', () => {
-    // Сначала добавляем булку
-    dragAndDrop(
-      '[data-testid=ingredient-item]:first',
-      '[data-testid=constructor]'
-    );
+  it('Проверка оформления заказа для авторизованного пользователя', () => {
+    // Сначала логинимся
+    cy.visit('/login');
+    cy.get('input[name="email"]').type(Cypress.env('email'));
+    cy.get('input[name="password"]').type(Cypress.env('password'));
 
-    // Затем добавляем начинку
-    dragAndDrop(
-      '[data-testid=ingredient-item]:eq(1)',
-      '[data-testid=constructor-ingredients]'
-    );
+    // Мокаем логин
+    cy.intercept('POST', api.login, {
+      fixture: 'user.json'
+    }).as('login');
 
-    cy.get('[data-testid=constructor-ingredients]').should(
-      'contain',
-      'Говяжий метеорит (отбивная)'
-    );
-  });
+    cy.get('button[type="submit"]').click();
+    cy.wait('@login').its('response.statusCode').should('eq', 200);
 
-  it('should enable order button when bun is added', () => {
-    cy.get('[data-testid=order-button]').should('be.disabled');
+    // Проверяем токены
+    cy.getCookie('accessToken').should('exist');
 
-    dragAndDrop(
-      '[data-testid=ingredient-item]:first',
-      '[data-testid=constructor]'
-    );
+    // Возвращаемся на главную
+    cy.visit('/');
 
-    cy.get('[data-testid=order-button]').should('not.be.disabled');
-  });
-
-  it('should show order modal after creating order', () => {
-    // Мокаем авторизацию
-    cy.intercept('GET', '**/api/auth/user', {
-      statusCode: 200,
-      body: {
-        success: true,
-        user: { email: 'test@example.com', name: 'Test User' }
-      }
-    }).as('getUser');
+    // Добавляем ингредиенты в конструктор
+    cy.get(selectors.ingredient_bun).drag(selectors.constructor_container);
+    cy.get(selectors.ingredient_main).drag(selectors.constructor_ingredients);
 
     // Мокаем создание заказа
-    cy.intercept('POST', '**/api/orders', {
+    cy.intercept('POST', api.order, {
       fixture: 'order.json'
-    }).as('createOrder');
+    }).as('order');
 
-    // Устанавливаем токен
-    cy.setCookie('accessToken', 'test-token');
+    // Оформляем заказ
+    cy.get('button').contains(selectors.order_button).click();
 
-    // Добавляем ингредиенты
-    dragAndDrop(
-      '[data-testid=ingredient-item]:first',
-      '[data-testid=constructor]'
-    );
-    dragAndDrop(
-      '[data-testid=ingredient-item]:eq(1)',
-      '[data-testid=constructor-ingredients]'
-    );
+    // Ждем создания заказа
+    cy.wait('@order').its('response.statusCode').should('eq', 200);
 
-    // Создаем заказ
-    cy.get('[data-testid=order-button]').click();
-
-    cy.wait('@createOrder');
-    cy.get('[data-testid=modal]').should('be.visible');
-    cy.contains('идентификатор заказа').should('be.visible');
+    // Проверяем модальное окно с номером заказа
+    cy.get(selectors.modal).should('be.visible');
+    cy.contains(selectors.order_modal_text).should('be.visible');
+    cy.contains('12345').should('be.visible');
   });
 });

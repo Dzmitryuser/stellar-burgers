@@ -1,2 +1,3 @@
 // cypress/support/commands.ts
-// Оставляем пустым - не используем кастомные команды
+// Import drag and drop commands
+import '@4tw/cypress-drag-drop';

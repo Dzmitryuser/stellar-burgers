@@ -7,10 +7,8 @@ export default defineConfig({
       // implement node event listeners here
     }
   },
-  component: {
-    devServer: {
-      framework: 'react',
-      bundler: 'webpack'
-    }
+  env: {
+    email: 'test@example.com',
+    password: 'password'
   }
 });
