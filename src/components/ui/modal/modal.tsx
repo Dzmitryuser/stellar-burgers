@@ -1,4 +1,4 @@
-//src/components/ui/modal/modal.tsx
+// src/components/ui/modal/modal.tsx
 import { FC, memo } from 'react';
 
 import styles from './modal.module.css';
@@ -15,7 +15,11 @@ export const ModalUI: FC<TModalUIProps> = memo(
           <h3 className={`${styles.title} text text_type_main-large`}>
             {title}
           </h3>
-          <button className={styles.button} type='button'>
+          <button
+            className={styles.button}
+            type='button'
+            data-testid='modal-close'
+          >
             <CloseIcon type='primary' onClick={onClose} />
           </button>
         </div>

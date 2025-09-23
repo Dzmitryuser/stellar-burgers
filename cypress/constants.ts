@@ -1,4 +1,4 @@
-//stellar-burgers\cypress\constants.ts
+// stellar-burgers/cypress/constants.ts
 // Константы для селекторов и API
 export const selectors = {
   // Ингредиенты по их _id
@@ -8,13 +8,22 @@ export const selectors = {
   // Конструктор
   constructor_container: '[data-testid="constructor"]',
   constructor_ingredients: '[data-testid="constructor-ingredients"]',
+  constructor_bun_top: '[data-testid="constructor-bun-top"]',
+  constructor_bun_bottom: '[data-testid="constructor-bun-bottom"]',
 
   // Модальные окна
   close_modal: '[data-testid="modal-close"]',
   modal: '[data-testid="modal"]',
+  order_modal: '[data-testid="order-modal"]',
+  modal_overlay: '[data-testid="modal-overlay"]',
 
-  // Кнопки и текст
-  order_button: 'Оформить заказ',
+  // Кнопки и элементы
+  order_button: '[data-testid="order-button"]',
+  total_price: '[data-testid="total-price"]',
+  preloader: '[data-testid="preloader"]',
+  order_details: '[data-testid="order-details"]',
+
+  // Текст
   login_page_text: 'Вход',
   order_modal_text: 'идентификатор заказа'
 };
