@@ -17,10 +17,10 @@ describe('E2E тестирование просмотра деталей инг�
     // Кликаем на ингредиент
     cy.get(selectors.ingredient_bun).click();
 
-    // Проверяем что модальное окно открылось
+    // Проверяем что модальное окно открылось (ИСПРАВЛЕНИЕ: ищем внутри #modals)
     cy.get(selectors.modal).should('be.visible');
-    cy.contains('Детали ингредиента').should('be.visible');
-    cy.contains('Краторная булка N-200i').should('be.visible');
+    cy.get('#modals').contains('Детали ингредиента').should('be.visible');
+    cy.get('#modals').contains('Краторная булка N-200i').should('be.visible');
 
     // Закрываем модальное окно через кнопку
     cy.get(selectors.close_modal).click();

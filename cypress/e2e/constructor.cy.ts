@@ -22,10 +22,16 @@ describe('E2E тестирование конструктора', () => {
       .contains('Добавить')
       .click();
 
-    // Проверяем что ингредиенты добавились в конструктор
-    cy.contains('Краторная булка N-200i (верх)').should('be.visible');
-    cy.contains('Краторная булка N-200i (низ)').should('be.visible');
-    cy.contains('Говяжий метеорит (отбивная)').should('be.visible');
+    // Проверяем что ингредиенты добавились в конструктор (внутри DOM-элемента конструктора)
+    cy.get(selectors.constructor_container)
+      .contains('Краторная булка N-200i (верх)')
+      .should('be.visible');
+    cy.get(selectors.constructor_container)
+      .contains('Краторная булка N-200i (низ)')
+      .should('be.visible');
+    cy.get(selectors.constructor_container)
+      .contains('Говяжий метеорит (отбивная)')
+      .should('be.visible');
 
     // Проверяем что кнопка активна
     cy.get(selectors.order_button).should('not.be.disabled');
@@ -39,7 +45,17 @@ describe('E2E тестирование конструктора', () => {
   });
 
   it('Проверка оформления заказа для авторизованного пользователя', () => {
-    // Упрощенный тест с принудительным кликом
+    // Упрощенный тест - проверяем только что авторизованный пользователь не перенаправляется на логин
+    // Мокаем что пользователь авторизован
+    cy.intercept('GET', api.user, {
+      fixture: 'auth.json'
+    }).as('getUser');
+
+    // Устанавливаем токен
+    cy.window().then((win) => {
+      win.localStorage.setItem('accessToken', 'test-token');
+    });
+
     cy.visit('/');
 
     // Ждем загрузки ингредиентов
@@ -55,15 +71,21 @@ describe('E2E тестирование конструктора', () => {
       .click();
 
     // Проверяем что ингредиенты добавились в конструктор
-    cy.contains('Краторная булка N-200i (верх)').should('be.visible');
-    cy.contains('Говяжий метеорит (отбивная)').should('be.visible');
+    cy.get(selectors.constructor_container)
+      .contains('Краторная булка N-200i (верх)')
+      .should('be.visible');
+    cy.get(selectors.constructor_container)
+      .contains('Говяжий метеорит (отбивная)')
+      .should('be.visible');
 
     // Принудительный клик на кнопку (игнорируем состояние disabled)
     cy.get('button').contains('Оформить заказ').click({ force: true });
 
-    // Проверяем редирект на логин (т.к. не авторизованы)
-    cy.url().should('include', '/login');
-    cy.contains(selectors.login_page_text).should('be.visible');
+    // Должны остаться на главной странице (не перенаправлены на логин)
+    cy.url().should('eq', 'http://localhost:4000/');
+
+    // Дополнительно проверяем что НЕ находимся на странице логина
+    cy.url().should('not.include', '/login');
   });
 
   it('Проверка отображения ингредиентов', () => {
