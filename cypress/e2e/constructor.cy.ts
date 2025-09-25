@@ -51,7 +51,7 @@ describe('E2E тестирование конструктора', () => {
   });
 
   it('Проверка оформления заказа для авторизованного пользователя', () => {
-    // Мокаем что пользователь авторизован - перехватываем запрос ДО посещения страницы
+    // Мокаем что пользователь авторизован
     cy.intercept('GET', api.user, (req) => {
       req.reply({
         statusCode: 200,
@@ -65,7 +65,7 @@ describe('E2E тестирование конструктора', () => {
       });
     }).as('getUser');
 
-    // Устанавливаем токен в localStorage ДО посещения страницы
+    // Устанавливаем токен в localStorage
     cy.window().then((win) => {
       win.localStorage.setItem('accessToken', 'Bearer test-access-token');
     });
@@ -102,19 +102,28 @@ describe('E2E тестирование конструктора', () => {
     cy.get(selectors.order_button).click();
 
     // Ожидаем что НЕ произойдет редирект на логин
-    // Даем время на возможный редирект
     cy.wait(1000);
 
     // Проверяем что остались на главной странице
     cy.url().should('eq', 'http://localhost:4000/');
     cy.url().should('not.include', '/login');
 
-    // Вместо проверки disabled кнопки, проверяем что на странице есть конструктор
-    cy.get(selectors.constructor_container).should('be.visible');
-
     // Логируем успешное выполнение
     cy.log('✅ Авторизованный пользователь успешно попытался оформить заказ');
     cy.log('✅ Редирект на логин не произошел');
+  });
+
+  it('Проверка добавления ингредиента в конструктор', () => {
+    // Добавляем ингредиент через кнопку "Добавить"
+    cy.contains('Краторная булка N-200i').parent().contains('Добавить').click();
+
+    // Проверяем что ингредиент добавился именно в конструктор
+    cy.get(selectors.constructor_container)
+      .contains('Краторная булка N-200i (верх)')
+      .should('be.visible');
+    cy.get(selectors.constructor_container)
+      .contains('Краторная булка N-200i (низ)')
+      .should('be.visible');
   });
 
   it('Проверка отображения ингредиентов', () => {

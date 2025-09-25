@@ -17,7 +17,7 @@ describe('E2E тестирование просмотра деталей инг�
     // Кликаем на ингредиент
     cy.get(selectors.ingredient_bun).click();
 
-    // Проверяем что модальное окно открылось (ИСПРАВЛЕНИЕ: ищем внутри #modals)
+    // Проверяем что модальное окно открылось (ищем внутри #modals)
     cy.get(selectors.modal).should('be.visible');
     cy.get('#modals').contains('Детали ингредиента').should('be.visible');
     cy.get('#modals').contains('Краторная булка N-200i').should('be.visible');
@@ -25,6 +25,28 @@ describe('E2E тестирование просмотра деталей инг�
     // Закрываем модальное окно через кнопку
     cy.get(selectors.close_modal).click();
     cy.get(selectors.modal).should('not.exist');
+  });
+
+  it('Проверка открытия модального окна для конкретного ингредиента', () => {
+    // Кликаем на булку
+    cy.get(selectors.ingredient_bun).click();
+
+    // Проверяем что в модальном окне данные именно булки
+    cy.get('#modals').contains('Краторная булка N-200i').should('be.visible');
+
+    // Закрываем модальное окно
+    cy.get(selectors.close_modal).click();
+
+    // Кликаем на начинку
+    cy.get(selectors.ingredient_main).click();
+
+    // Проверяем что в модальном окне данные именно начинки
+    cy.get('#modals')
+      .contains('Говяжий метеорит (отбивная)')
+      .should('be.visible');
+
+    // Закрываем модальное окно
+    cy.get(selectors.close_modal).click();
   });
 
   it('Проверка работоспособности модального окна после перезагрузки страницы', () => {
