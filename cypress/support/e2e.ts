@@ -5,9 +5,7 @@ import './commands';
 beforeEach(() => {
   // Очищаем cookies и localStorage перед каждым тестом
   cy.clearCookies();
-  cy.window().then((win) => {
-    win.localStorage.clear();
-  });
+  cy.clearLocalStorage();
 });
 
 // Глобальные перехватчики

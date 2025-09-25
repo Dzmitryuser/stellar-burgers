@@ -14,6 +14,12 @@ describe('E2E тестирование конструктора', () => {
     cy.visit('/');
   });
 
+  afterEach(() => {
+    // Очищаем localStorage и cookies после каждого теста
+    cy.clearLocalStorage();
+    cy.clearCookies();
+  });
+
   it('Проверка невозможности оформить заказ для неавторизованного пользователя', () => {
     // Добавляем ингредиенты через кнопки "Добавить"
     cy.contains('Краторная булка N-200i').parent().contains('Добавить').click();
@@ -45,15 +51,23 @@ describe('E2E тестирование конструктора', () => {
   });
 
   it('Проверка оформления заказа для авторизованного пользователя', () => {
-    // Упрощенный тест - проверяем только что авторизованный пользователь не перенаправляется на логин
-    // Мокаем что пользователь авторизован
-    cy.intercept('GET', api.user, {
-      fixture: 'auth.json'
+    // Мокаем что пользователь авторизован - перехватываем запрос ДО посещения страницы
+    cy.intercept('GET', api.user, (req) => {
+      req.reply({
+        statusCode: 200,
+        body: {
+          success: true,
+          user: {
+            email: 'test@example.com',
+            name: 'Test User'
+          }
+        }
+      });
     }).as('getUser');
 
-    // Устанавливаем токен
+    // Устанавливаем токен в localStorage ДО посещения страницы
     cy.window().then((win) => {
-      win.localStorage.setItem('accessToken', 'test-token');
+      win.localStorage.setItem('accessToken', 'Bearer test-access-token');
     });
 
     cy.visit('/');
@@ -75,17 +89,32 @@ describe('E2E тестирование конструктора', () => {
       .contains('Краторная булка N-200i (верх)')
       .should('be.visible');
     cy.get(selectors.constructor_container)
+      .contains('Краторная булка N-200i (низ)')
+      .should('be.visible');
+    cy.get(selectors.constructor_container)
       .contains('Говяжий метеорит (отбивная)')
       .should('be.visible');
 
-    // Принудительный клик на кнопку (игнорируем состояние disabled)
-    cy.get('button').contains('Оформить заказ').click({ force: true });
+    // Проверяем что кнопка заказа активна
+    cy.get(selectors.order_button).should('not.be.disabled');
 
-    // Должны остаться на главной странице (не перенаправлены на логин)
+    // Оформляем заказ
+    cy.get(selectors.order_button).click();
+
+    // Ожидаем что НЕ произойдет редирект на логин
+    // Даем время на возможный редирект
+    cy.wait(1000);
+
+    // Проверяем что остались на главной странице
     cy.url().should('eq', 'http://localhost:4000/');
-
-    // Дополнительно проверяем что НЕ находимся на странице логина
     cy.url().should('not.include', '/login');
+
+    // Вместо проверки disabled кнопки, проверяем что на странице есть конструктор
+    cy.get(selectors.constructor_container).should('be.visible');
+
+    // Логируем успешное выполнение
+    cy.log('✅ Авторизованный пользователь успешно попытался оформить заказ');
+    cy.log('✅ Редирект на логин не произошел');
   });
 
   it('Проверка отображения ингредиентов', () => {
