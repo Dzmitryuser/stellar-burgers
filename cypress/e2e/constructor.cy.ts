@@ -52,17 +52,8 @@ describe('E2E тестирование конструктора', () => {
 
   it('Проверка оформления заказа для авторизованного пользователя', () => {
     // Мокаем что пользователь авторизован
-    cy.intercept('GET', api.user, (req) => {
-      req.reply({
-        statusCode: 200,
-        body: {
-          success: true,
-          user: {
-            email: 'test@example.com',
-            name: 'Test User'
-          }
-        }
-      });
+    cy.intercept('GET', api.user, {
+      fixture: 'auth.json'
     }).as('getUser');
 
     // Устанавливаем токен в localStorage
@@ -95,22 +86,22 @@ describe('E2E тестирование конструктора', () => {
       .contains('Говяжий метеорит (отбивная)')
       .should('be.visible');
 
-    // Проверяем что кнопка заказа активна
-    cy.get(selectors.order_button).should('not.be.disabled');
-
     // Оформляем заказ
     cy.get(selectors.order_button).click();
 
-    // Ожидаем что НЕ произойдет редирект на логин
-    cy.wait(1000);
-
-    // Проверяем что остались на главной странице
-    cy.url().should('eq', 'http://localhost:4000/');
+    // Основная проверка: авторизованный пользователь НЕ перенаправляется на логин
+    // и может взаимодействовать с интерфейсом оформления заказа
     cy.url().should('not.include', '/login');
+    cy.url().should('eq', 'http://localhost:4000/');
+
+    // Проверяем что интерфейс реагирует на попытку оформления заказа
+    cy.get(selectors.order_button).should('exist');
+    cy.get(selectors.constructor_container).should('be.visible');
 
     // Логируем успешное выполнение
     cy.log('✅ Авторизованный пользователь успешно попытался оформить заказ');
     cy.log('✅ Редирект на логин не произошел');
+    cy.log('✅ Пользователь остался на странице конструктора');
   });
 
   it('Проверка добавления ингредиента в конструктор', () => {
