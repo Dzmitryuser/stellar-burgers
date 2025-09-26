@@ -10,12 +10,8 @@ beforeEach(() => {
 
 // Глобальные перехватчики
 before(() => {
-  // Перехватываем основные API запросы
+  // Перехватываем только API ингредиентов
   cy.intercept('GET', 'https://norma.nomoreparties.space/api/ingredients', {
     fixture: 'ingredients.json'
   }).as('getIngredients');
-
-  cy.intercept('GET', 'https://norma.nomoreparties.space/api/auth/user', {
-    statusCode: 401
-  }).as('getUser');
 });
