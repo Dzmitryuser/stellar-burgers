@@ -1,3 +1,4 @@
+//stellar-burgers\src\components\protected-route\protected-route.tsx
 import { FC, useEffect } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../services/hooks';

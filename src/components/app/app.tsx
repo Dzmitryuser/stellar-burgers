@@ -1,3 +1,4 @@
+// stellar-burgers/src/components/app/app.tsx
 import { useEffect } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../services/hooks';
@@ -36,7 +37,7 @@ const App = () => {
   };
 
   return (
-    <div className={styles.app}>
+    <div className={styles.app} data-testid='app'>
       <AppHeader />
 
       <Routes location={background || location}>

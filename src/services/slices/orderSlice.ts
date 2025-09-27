@@ -1,5 +1,6 @@
+//stellar-burgers\src\services\slices\orderSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { orderBurgerApi } from '@api';
+import { orderBurgerApi } from '../../utils/burger-api';
 import { TOrder } from '@utils-types';
 
 export const createOrder = createAsyncThunk(

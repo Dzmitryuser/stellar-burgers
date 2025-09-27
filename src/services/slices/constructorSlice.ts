@@ -1,3 +1,4 @@
+//stellar-burgers\src\services\slices\constructorSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TIngredient, TConstructorIngredient } from '@utils-types';
 import { v4 as uuidv4 } from 'uuid';

@@ -1,3 +1,4 @@
+//stellar-burgers\src\services\hooks.ts
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 import type { AppDispatch } from './store';
 import type { RootState } from './reducers'; // Импорт из reducers

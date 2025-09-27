@@ -1,3 +1,4 @@
+//stellar-burgers\src\services\slices\authSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import {
   registerUserApi,
@@ -7,9 +8,9 @@ import {
   updateUserApi,
   TRegisterData,
   TLoginData
-} from '@api';
+} from '../../utils/burger-api';
 import { setCookie, deleteCookie, getCookie } from '../../utils/cookie';
-import { TUser } from '@utils-types';
+import { TUser } from '../../utils/types';
 
 export const registerUser = createAsyncThunk(
   'auth/register',
@@ -84,10 +85,12 @@ const authSlice = createSlice({
       .addCase(registerUser.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
+        state.isAuthChecked = true; // ДОБАВЛЕНО
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || 'Registration failed';
+        state.isAuthChecked = true; // ДОБАВЛЕНО
       })
       .addCase(loginUser.pending, (state) => {
         state.loading = true;
@@ -96,13 +99,16 @@ const authSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
+        state.isAuthChecked = true; // ДОБАВЛЕНО
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || 'Login failed';
+        state.isAuthChecked = true; // ДОБАВЛЕНО
       })
       .addCase(logoutUser.fulfilled, (state) => {
         state.user = null;
+        state.isAuthChecked = true; // ДОБАВЛЕНО
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.user = action.payload;

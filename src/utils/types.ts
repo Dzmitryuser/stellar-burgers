@@ -1,3 +1,4 @@
+//stellar-burgers\src\utils\types.ts
 export type TIngredient = {
   _id: string;
   name: string;

@@ -1,5 +1,6 @@
+//stellar-burgers\src\services\slices\ingredientsSlice.ts
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getIngredientsApi } from '@api';
+import { getIngredientsApi } from '../../utils/burger-api';
 import { TIngredient } from '@utils-types';
 
 export const fetchIngredients = createAsyncThunk(

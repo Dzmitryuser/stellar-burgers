@@ -1,3 +1,4 @@
+//stellar-burgers\src\components\burger-constructor-element\burger-constructor-element.tsx
 import { FC, memo } from 'react';
 import { useAppDispatch } from '../../services/hooks';
 import {

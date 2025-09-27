@@ -1,3 +1,4 @@
+//stellar-burgers\src\components\burger-ingredient\burger-ingredient.tsx
 import { FC, memo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAppDispatch } from '../../services/hooks';

@@ -1,4 +1,4 @@
-//src/components/ui/burger-ingredient/burger-ingredient.tsx
+// src/components/ui/burger-ingredient/burger-ingredient.tsx
 import React, { FC, memo } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './burger-ingredient.module.css';
@@ -16,7 +16,7 @@ export const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
     const { image, price, name, _id } = ingredient;
 
     return (
-      <li className={styles.container}>
+      <li className={styles.container} data-testid={_id}>
         <Link
           className={styles.article}
           to={`/ingredients/${_id}`}
@@ -34,6 +34,7 @@ export const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
           text='Добавить'
           onClick={handleAdd}
           extraClass={`${styles.addButton} mt-8`}
+          data-testid={`add-button-${_id}`}
         />
       </li>
     );
