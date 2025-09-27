@@ -17,10 +17,12 @@ describe('E2E тестирование просмотра деталей инг�
     // Кликаем на ингредиент
     cy.get(selectors.ingredient_bun).click();
 
-    // Проверяем что модальное окно открылось (ищем внутри #modals)
+    // Проверяем что модальное окно открылось (ищем внутри модального окна)
     cy.get(selectors.modal).should('be.visible');
-    cy.get('#modals').contains('Детали ингредиента').should('be.visible');
-    cy.get('#modals').contains('Краторная булка N-200i').should('be.visible');
+    cy.get(selectors.modal).contains('Детали ингредиента').should('be.visible');
+    cy.get(selectors.modal)
+      .contains('Краторная булка N-200i')
+      .should('be.visible');
 
     // Закрываем модальное окно через кнопку
     cy.get(selectors.close_modal).click();
@@ -32,7 +34,9 @@ describe('E2E тестирование просмотра деталей инг�
     cy.get(selectors.ingredient_bun).click();
 
     // Проверяем что в модальном окне данные именно булки
-    cy.get('#modals').contains('Краторная булка N-200i').should('be.visible');
+    cy.get(selectors.modal)
+      .contains('Краторная булка N-200i')
+      .should('be.visible');
 
     // Закрываем модальное окно
     cy.get(selectors.close_modal).click();
@@ -41,7 +45,7 @@ describe('E2E тестирование просмотра деталей инг�
     cy.get(selectors.ingredient_main).click();
 
     // Проверяем что в модальном окне данные именно начинки
-    cy.get('#modals')
+    cy.get(selectors.modal)
       .contains('Говяжий метеорит (отбивная)')
       .should('be.visible');
 
